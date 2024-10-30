@@ -4,7 +4,7 @@ import { setImages, setSelectedImage } from '../redux/imageSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SearchPage.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 const SearchPage = () => {
   const [query, setQuery] = useState('');
   const [error, setError] = useState('');
@@ -85,20 +85,21 @@ const SearchPage = () => {
 
       {error && <p className="error">{error}</p>}
 
-      <div className="image-grid">
+      <div className="row">
         {images.map((image) => (
-          <div key={image.id} className="image-card">
+          <div key={image.id} className="col-md-4">
             <button
               onClick={() => handleAddCaption(image)}
               className="image-button"
               style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
             >
-              <img src={image.urls.small} alt={image.alt_description} />
+              <img  className='mx-2' src={image.urls.small} alt={image.alt_description} />
             </button>
-            <button onClick={() => handleAddCaption(image)} className="caption-button">
+            <button onClick={() => handleAddCaption(image)} className="caption-button btn btn-primary my-2">
               Add Caption
             </button>
           </div>
+          
         ))}
       </div>
 
