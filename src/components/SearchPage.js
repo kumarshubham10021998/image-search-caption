@@ -10,12 +10,12 @@ const SearchPage = () => {
   const [error, setError] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  
+
   const images = useSelector((state) => state.images.images);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
+
   useEffect(() => {
     const storedName = localStorage.getItem('name') || 'Your Name';
     const storedEmail = localStorage.getItem('email') || 'Your Email';
@@ -72,25 +72,36 @@ const SearchPage = () => {
       </div>
 
       <div className="search-bar">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter your search term"
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
+  <input
+    type="text"
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    placeholder="Enter your search term"
+    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}  // Handle Enter key press
+  />
+  <button onClick={handleSearch}>Search</button>
+</div>
+
 
       {error && <p className="error">{error}</p>}
 
       <div className="image-grid">
         {images.map((image) => (
           <div key={image.id} className="image-card">
-            <img src={image.urls.small} alt={image.alt_description} />
-            <button onClick={() => handleAddCaption(image)}>Add Caption</button>
+            <button
+              onClick={() => handleAddCaption(image)}
+              className="image-button"
+              style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+            >
+              <img src={image.urls.small} alt={image.alt_description} />
+            </button>
+            <button onClick={() => handleAddCaption(image)} className="caption-button">
+              Add Caption
+            </button>
           </div>
         ))}
       </div>
+
     </div>
   );
 };
